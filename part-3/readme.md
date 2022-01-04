@@ -12,7 +12,12 @@ docker-compose up
 
 3. Access to `http://<server>:4200` where server is the ip of your VM.
 
-## Current deployment
+In my case, I also deployed the app on a VM and you can access the following url for testing:
+
+- http://103.160.5.142:4200/
+
+However, the frontend app is running in debug mode. I haven't built frontend source code and use nginx / apache server to serve frontend files.
+## Gloud App Engine & Firebase deployment
 
 Currently, backend is deployed by using google cloud app engine. Please look at the `backend/app.yaml` for more details.
 
