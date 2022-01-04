@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"os"
 	"os/signal"
 	"syscall"
@@ -10,8 +9,9 @@ import (
 
 	"github.com/bluesky2106/sky-mavis-test/part-3/backend/api"
 	"github.com/bluesky2106/sky-mavis-test/part-3/backend/config"
-	"github.com/bluesky2106/sky-mavis-test/part-3/backend/libs/storage"
+	"github.com/bluesky2106/sky-mavis-test/part-3/backend/daos"
 	"github.com/bluesky2106/sky-mavis-test/part-3/backend/log"
+	"github.com/bluesky2106/sky-mavis-test/part-3/backend/services"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
@@ -25,8 +25,13 @@ func main() {
 	// Init logger
 	log.InitLogger(conf.Env)
 
-	storage := storage.NewGCStorage(conf.GCStorageCredentials, conf.GCStorageBucketName, conf.GCStorageBaseURL)
-	fmt.Print(storage)
+	// Init daos
+	if err := initDAO(conf); err != nil {
+		log.GetLogger().Fatal("failed to init DAO:", zap.Error(err))
+	}
+
+	// Init services
+	visitorSvc := services.NewVisitorService(conf)
 
 	if conf.Env == "production" {
 		gin.SetMode(gin.ReleaseMode)
@@ -42,9 +47,8 @@ func main() {
 		MaxAge:           12 * time.Hour,
 	}))
 
-	svr := api.NewServer(conf, router)
-	// authMw := api.AuthMiddleware(string(conf.TokenSecretKey), svr.Authenticate)
-	// svr.Routes(authMw)
+	svr := api.NewServer(conf, router, visitorSvc)
+	svr.Routes()
 	go func() {
 		if err := svr.Run(); err != nil {
 			log.GetLogger().Error("svr.Run", zap.Error(err))
@@ -70,4 +74,17 @@ func waitForInterruptSignal() {
 	// kill -9 is syscall.SIGKILL but can't be catch, so don't need add it
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 	<-quit
+}
+
+func initDAO(conf *config.Config) error {
+	if err := daos.Init(conf); err != nil {
+		log.GetLogger().Error("failed to init mysql:", zap.Error(err))
+		return err
+	}
+	if err := daos.AutoMigrate(); err != nil {
+		log.GetLogger().Error("failed to migrate database:", zap.Error(err))
+		return err
+	}
+
+	return nil
 }
