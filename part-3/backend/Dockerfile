@@ -17,7 +17,7 @@ RUN CGO_ENABLED=0 go build -o server && \
     chmod u+x server
 
 RUN mkdir -p /app
-RUN cp ${WDIR}/server ${WDIR}/logs/.gitkeep /app/
+RUN cp ${WDIR}/server ${WDIR}/logs/.gitkeep ${WDIR}/resources/GeoLite2-City.mmdb /app/
 
 FROM buildpack-deps:stretch-scm
 
@@ -28,5 +28,6 @@ ENV mysql_conn_url="skymavis:skymavis@tcp(skymavis-mysql:3306)/skymavis_db?chars
 
 COPY --from=build /app/server /server
 COPY --from=build /app/.gitkeep /logs/.gitkeep
+COPY --from=build /app/GeoLite2-City.mmdb /resources/GeoLite2-City.mmdb
 
 CMD ["./server"]
