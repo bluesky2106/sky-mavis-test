@@ -1,4 +1,4 @@
-const serverHost = `http://localhost:6000`;
+const serverHost = `https://dantrisoft-301412.et.r.appspot.com`;
 
 export const environment = {
   production: true,
