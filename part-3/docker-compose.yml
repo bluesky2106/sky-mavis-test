@@ -2,7 +2,7 @@ version: "3.1"
 services:
   mysql:
     image: mysql:8.0.21
-    container_name: skymavis_mysql
+    container_name: skymavis-mysql
     restart: always
     environment:
       MYSQL_DATABASE: skymavis_db
@@ -16,6 +16,38 @@ services:
       - '3308'
     volumes:
       - "./storage/mysql/dbdata:/var/lib/mysql"
+    networks:
+      - network-skymavis
+  backend:
+    container_name: skymavis-backend
+    restart: always
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - 6000:6000
+    volumes:
+      - "./storage/backend/logs:/logs"
+    expose:
+      - 6000
+    depends_on:
+      - mysql
+    networks:
+      - network-skymavis
+  frontend:
+    container_name: skymavis-frontend
+    restart: always
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - 6001:6001
+    expose:
+      - 6001
+    # volumes:
+    #   - web:/usr/src/app/frontend
+    stdin_open: true
+    tty: true
     networks:
       - network-skymavis
 
