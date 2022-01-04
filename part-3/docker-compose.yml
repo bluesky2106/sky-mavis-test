@@ -1,0 +1,27 @@
+version: "3.1"
+services:
+  mysql:
+    image: mysql:8.0.21
+    container_name: skymavis_mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: skymavis_db
+      MYSQL_USER: skymavis
+      MYSQL_PASSWORD: skymavis
+      MYSQL_ROOT_PASSWORD: skymavis
+      MYSQL_ROOT_HOST: '%'
+    ports:
+      - '3308:3306'
+    expose:
+      - '3308'
+    volumes:
+      - "./storage/mysql/dbdata:/var/lib/mysql"
+    networks:
+      - network-skymavis
+
+volumes:
+  jenkins_data:
+    driver: local
+
+networks:
+  network-skymavis: null
