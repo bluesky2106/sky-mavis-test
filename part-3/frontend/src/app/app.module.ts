@@ -33,7 +33,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppRoutingModule,
     CommonModule,
     HttpClientModule,
-    // MDBBootstrapModule.forRoot(),
+    MDBBootstrapModule.forRoot(),
     // MdbAccordionModule,
     // MdbCarouselModule,
     // MdbCheckboxModule,
