@@ -22,7 +22,7 @@ RUN cp ${WDIR}/server ${WDIR}/logs/.gitkeep ${WDIR}/resources/GeoLite2-City.mmdb
 FROM buildpack-deps:stretch-scm
 
 ENV host="0.0.0.0"
-ENV port="6000"
+ENV port="4201"
 ENV env="production"
 ENV mysql_conn_url="skymavis:skymavis@tcp(skymavis-mysql:3306)/skymavis_db?charset=utf8mb4&parseTime=True&loc=UTC"
 
