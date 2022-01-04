@@ -1,0 +1,5 @@
+vendor
+.env.sh
+log.txt
+*netrc
+dantrisoft-970a7cdc49ea.json
