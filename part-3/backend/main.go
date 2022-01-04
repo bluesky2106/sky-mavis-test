@@ -29,9 +29,10 @@ func main() {
 	if err := initDAO(conf); err != nil {
 		log.GetLogger().Fatal("failed to init DAO:", zap.Error(err))
 	}
+	visitorDAO := daos.NewVisitor()
 
 	// Init services
-	visitorSvc := services.NewVisitorService(conf)
+	visitorSvc := services.NewVisitorService(conf, visitorDAO)
 
 	if conf.Env == "production" {
 		gin.SetMode(gin.ReleaseMode)

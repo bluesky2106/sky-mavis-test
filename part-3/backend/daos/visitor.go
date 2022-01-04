@@ -65,3 +65,39 @@ func (dao *Visitor) FindAllByQuery(filters map[string]interface{}) ([]*models.Vi
 	}
 	return models, nil
 }
+
+// FindLast100Visitors :
+func (dao *Visitor) FindLast100Visitors() ([]*models.Visitor, error) {
+
+	var (
+		models []*models.Visitor
+		offset = 0
+		order  = "last_visit desc"
+	)
+
+	query := GetDB().Table(visitorTable).Order(order)
+	query = query.Limit(100).Offset(offset)
+
+	if err := query.Find(&models).Error; err != nil {
+		return nil, err
+	}
+	return models, nil
+}
+
+// FindTop100Visitors :
+func (dao *Visitor) FindTop100Visitors() ([]*models.Visitor, error) {
+
+	var (
+		models []*models.Visitor
+		offset = 0
+		order  = "visits desc"
+	)
+
+	query := GetDB().Table(visitorTable).Order(order)
+	query = query.Limit(100).Offset(offset)
+
+	if err := query.Find(&models).Error; err != nil {
+		return nil, err
+	}
+	return models, nil
+}

@@ -9,6 +9,7 @@ require (
 	github.com/go-sql-driver/mysql v1.6.0
 	github.com/jinzhu/gorm v1.9.16
 	github.com/natefinch/lumberjack v2.0.0+incompatible
+	github.com/oschwald/geoip2-golang v1.5.0
 	go.uber.org/zap v1.19.1
 	google.golang.org/api v0.63.0 // indirect
 )
