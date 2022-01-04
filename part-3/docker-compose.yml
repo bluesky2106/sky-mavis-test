@@ -25,11 +25,11 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     ports:
-      - 6000:6000
+      - 4201:4201
     volumes:
       - "./storage/backend/logs:/logs"
     expose:
-      - 6000
+      - 4201
     depends_on:
       - mysql
     networks:
@@ -41,9 +41,9 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     ports:
-      - 6001:6001
+      - 4200:4200
     expose:
-      - 6001
+      - 4200
     stdin_open: true
     tty: true
     networks:
