@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -29,23 +31,25 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    CommonModule,
+    HttpClientModule,
     // MDBBootstrapModule.forRoot(),
-    MdbAccordionModule,
-    MdbCarouselModule,
-    MdbCheckboxModule,
-    MdbCollapseModule,
-    MdbDropdownModule,
-    MdbFormsModule,
-    MdbModalModule,
-    MdbPopoverModule,
-    MdbRadioModule,
-    MdbRangeModule,
-    MdbRippleModule,
-    MdbScrollspyModule,
-    MdbTabsModule,
-    MdbTooltipModule,
-    MdbValidationModule,
-    BrowserAnimationsModule,
+    // MdbAccordionModule,
+    // MdbCarouselModule,
+    // MdbCheckboxModule,
+    // MdbCollapseModule,
+    // MdbDropdownModule,
+    // MdbFormsModule,
+    // MdbModalModule,
+    // MdbPopoverModule,
+    // MdbRadioModule,
+    // MdbRangeModule,
+    // MdbRippleModule,
+    // MdbScrollspyModule,
+    // MdbTabsModule,
+    // MdbTooltipModule,
+    // MdbValidationModule,
+    // BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
